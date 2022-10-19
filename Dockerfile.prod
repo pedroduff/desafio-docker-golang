@@ -1,0 +1,12 @@
+FROM golang AS builder
+
+WORKDIR /app
+COPY ./golang/fullcyclerocks.go .
+
+RUN  go build fullcyclerocks.go
+
+FROM scratch
+WORKDIR /app
+COPY --from=builder /app .
+
+CMD ["./fullcyclerocks"]
